@@ -44,11 +44,11 @@ def connect_to_endpoint(url):
     return response.json()
 
 
-def main():
+def get_tweets_with_bearer_token():
     url = create_url()
     json_response = connect_to_endpoint(url)
-    print(json.dumps(json_response, indent=4, sort_keys=True))
+    return json.dumps(json_response, indent=4, sort_keys=True)
 
 
 if __name__ == "__main__":
-    main()
+    get_tweets_with_bearer_token()
