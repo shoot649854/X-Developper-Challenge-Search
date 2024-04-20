@@ -22,27 +22,20 @@ def rank_tweets(tweets: list, context_string: str):
         similarity_score = cosine_similarity([sum(tweet_embeddings)], [sum(context_string_embeddings)])
         ranked_tweets.append((similarity_score[0][0], tweet))
         # return sorted(ranked_tweets, key=lambda x: x[0], reverse=True)
-        print(sorted(ranked_tweets, key=lambda x: x[0], reverse=True))
         # print("Similarity score between the two texts:", similarity_score[0][0])
+        return sorted(ranked_tweets, key=lambda x: x[0], reverse=True)
 
 
-tweets_text = []
-combined_tweets = []
-file_path = "recent_search_queries.json"
+def process_rank_tweets(queries):
+    tweets_text = []
+    combined_tweets = []
+    for query in queries:
+        parsed_query_results = json.loads(query["results"])
+        if "data" in parsed_query_results:        
+            tweets = parsed_query_results["data"]
+            for tweet in tweets:
+                combined_tweets.append(tweet)
+                tweets_text.append(tweet["text"])
 
-with open(file_path, "r") as file:
-    data = json.load(file)
-
-queries = data["queries"]
-
-for query in queries:
-    parsed_query_results = json.loads(query["results"])
-    if "data" in parsed_query_results:        
-        tweets = parsed_query_results["data"]
-        for tweet in tweets:
-            combined_tweets.append(tweet)
-            tweets_text.append(tweet["text"])
-# print(combined_tweets)
-
-rank_tweets(combined_tweets, context_string)
+    return rank_tweets(combined_tweets, context_string)
 
