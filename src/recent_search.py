@@ -21,12 +21,12 @@ def connect_to_endpoint(url, params):
     Connect to Twitter API endpoint
     """
     response = requests.get(url, auth=bearer_oauth, params=params)
-    print(response.status_code)
+    # print(response.status_code)
     if response.status_code != 200:
         raise Exception(response.status_code, response.text)
     return response.json()
 
-def recent_search(query, max_results=10):
+def recent_search(query, max_results=10, **kwargs):
     """
     Search for recent tweets based on a query and maximum number of results.
     """
@@ -35,6 +35,7 @@ def recent_search(query, max_results=10):
         'tweet.fields': 'author_id,created_at,text',
         'max_results': str(max_results)
     }
+    query_params.update(kwargs)
     json_response = connect_to_endpoint(search_url, query_params)
     return json.dumps(json_response, indent=4, sort_keys=True)
 

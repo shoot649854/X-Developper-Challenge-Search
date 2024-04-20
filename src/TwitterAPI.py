@@ -56,3 +56,4 @@ if __name__ == "__main__":
     keyword = "NBAPlayoffs"
     query = "#{0} -is:retweet".format(keyword)
     # print(twitter_api.recent_search(query, 10))
+    twitter_api.get_usage_tweets()
