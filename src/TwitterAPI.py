@@ -13,6 +13,7 @@ class TwitterAPI:
     def __init__(self):
         self.bearer_token = os.environ.get("BEARER_TOKEN")
         self.search_url = "https://api.twitter.com/2/tweets/search/recent"
+        self.usage_url = "https://api.twitter.com/2/usage/tweets"
 
     def bearer_oauth(self, r: requests.Request) -> requests.Request:
         """
@@ -44,8 +45,14 @@ class TwitterAPI:
         json_response = self.connect_to_endpoint(self.search_url, query_params)
         return json.dumps(json_response, indent=4, sort_keys=True)
 
+    def get_usage_tweets(self):
+        json_response = self.connect_to_endpoint(self.usage_url)
+        return json.dumps(json_response, indent=4, sort_keys=True)
+    
+    
 # Example Usage
 if __name__ == "__main__":
     twitter_api = TwitterAPI()
-    query = "#NBAPlayoffs -is:retweet"
-    print(twitter_api.recent_search(query, 10))
+    keyword = "NBAPlayoffs"
+    query = "#{0} -is:retweet".format(keyword)
+    # print(twitter_api.recent_search(query, 10))
