@@ -1,13 +1,13 @@
 import requests
 import os
 import json
-from dotenv import load_dotenv
-load_dotenv()
 
+# To set your enviornment variables in your terminal run the following line:
+# export 'BEARER_TOKEN'='<your_bearer_token>'
 bearer_token = os.environ.get("BEARER_TOKEN")
 
+
 def create_url():
-    tweet_fields = "tweet.fields=lang,author_id"
     # Tweet fields are adjustable.
     # Options include:
     # attachments, author_id, context_annotations,
@@ -15,11 +15,14 @@ def create_url():
     # in_reply_to_user_id, lang, non_public_metrics, organic_metrics,
     # possibly_sensitive, promoted_metrics, public_metrics, referenced_tweets,
     # source, text, and withheld
-    ids = "ids=1278747501642657792,1255542774432063488"
+    tweet_fields = "tweet.fields=lang,author_id"
+    # Be sure to replace your-user-id with your own user ID or one of an authenticating user
+    # You can find a user ID by using the user lookup endpoint
+    id = "your-user-id"
     # You can adjust ids to include a single Tweets.
     # Or you can add to up to 100 comma-separated IDs
-    url = "https://api.twitter.com/2/tweets?{}&{}".format(ids, tweet_fields)
-    return url
+    url = "https://api.twitter.com/2/users/{}/liked_tweets".format(id)
+    return url, tweet_fields
 
 
 def bearer_oauth(r):
@@ -28,12 +31,13 @@ def bearer_oauth(r):
     """
 
     r.headers["Authorization"] = f"Bearer {bearer_token}"
-    r.headers["User-Agent"] = "v2TweetLookupPython"
+    r.headers["User-Agent"] = "v2LikedTweetsPython"
     return r
 
 
-def connect_to_endpoint(url):
-    response = requests.request("GET", url, auth=bearer_oauth)
+def connect_to_endpoint(url, tweet_fields):
+    response = requests.request(
+        "GET", url, auth=bearer_oauth, params=tweet_fields)
     print(response.status_code)
     if response.status_code != 200:
         raise Exception(
@@ -44,11 +48,11 @@ def connect_to_endpoint(url):
     return response.json()
 
 
-def get_tweets_with_bearer_token():
-    url = create_url()
-    json_response = connect_to_endpoint(url)
-    return json.dumps(json_response, indent=4, sort_keys=True)
+def main():
+    url, tweet_fields = create_url()
+    json_response = connect_to_endpoint(url, tweet_fields)
+    print(json.dumps(json_response, indent=4, sort_keys=True))
 
 
 if __name__ == "__main__":
-    get_tweets_with_bearer_token()
+    main()

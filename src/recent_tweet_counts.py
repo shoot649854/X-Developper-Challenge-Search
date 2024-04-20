@@ -27,10 +27,9 @@ def connect_to_endpoint(url, params):
     return response.json()
 
 
-def main():
+def recent_tweet_counts():
     json_response = connect_to_endpoint(search_url, query_params)
-    print(json.dumps(json_response, indent=4, sort_keys=True))
-
+    return (json.dumps(json_response, indent=4, sort_keys=True))
 
 if __name__ == "__main__":
-    main()
+    print(recent_tweet_counts())
