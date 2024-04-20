@@ -26,9 +26,6 @@ def rank_tweets(tweets: list, context_string: str):
         # print("Similarity score between the two texts:", similarity_score[0][0])
 
 
-# rank_tweets(tweets, context_string)
-
-
 tweets_text = []
 combined_tweets = []
 file_path = "recent_search_queries.json"

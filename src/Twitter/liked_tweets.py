@@ -38,7 +38,6 @@ def bearer_oauth(r):
 def connect_to_endpoint(url, tweet_fields):
     response = requests.request(
         "GET", url, auth=bearer_oauth, params=tweet_fields)
-    print(response.status_code)
     if response.status_code != 200:
         raise Exception(
             "Request returned an error: {} {}".format(
