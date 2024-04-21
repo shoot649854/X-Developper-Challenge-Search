@@ -25,4 +25,3 @@ def rank_tweets(queries: list, context_string: str):
     sorted_items = sorted(ranked_tweets, key=lambda x: x[0], reverse=True)
     ranked_tweets_dict = [{"score": score_tweet_pair[0], "tweet": score_tweet_pair[1]} for score_tweet_pair in sorted_items]
     return ranked_tweets_dict
-
