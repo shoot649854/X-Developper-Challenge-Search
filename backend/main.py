@@ -6,7 +6,7 @@ load_dotenv()
 
 from Twitter.recent_search import recent_search
 from Twitter.process_queries import analyze
-from Twitter.rank_tweets import rank_tweets
+from Twitter.rank_tweets import rank_tweets, similarity_scorer
 
 DATA_DIR = os.path.join(os.getcwd(), "data")
 
@@ -16,11 +16,12 @@ def get_results(query):
     subqueries = res["subqueries"]
     data = {"queries": []}
     for item in subqueries:
-        query = "#{0} -is:retweet".format(item)
-        search_result = recent_search(query, 10)
-        search_result = search_result.replace("\n", "")
-        formatted_result = json.dumps(search_result, indent=4)
-        data["queries"].append({"query": query, "results": formatted_result})
+        query =  item
+        search_result = recent_search(query, 25)
+        formatted_result = json.dumps(json.loads(search_result), indent=4)
+        scoring = similarity_scorer(query, description)
+        if(scoring > 0.85):
+            data["queries"].append({"query": query, "results": formatted_result})
     sorted_tweets = rank_tweets(data["queries"], description)
     return (res, data)
 
