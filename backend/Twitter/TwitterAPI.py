@@ -33,7 +33,7 @@ class TwitterAPI:
             raise Exception(response.status_code, response.text)
         return response.json()
 
-    def recent_search(self, query: str, max_results: int = 10) -> str:
+    def recent_search(self, query: str, max_results: int = 25) -> str:
         """
         Search for recent tweets based on a query and maximum number of results.
         """
