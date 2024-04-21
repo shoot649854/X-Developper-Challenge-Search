@@ -12,6 +12,8 @@ python-dotenv = "^1.0.1"
 flask = "^3.0.3"
 pinecone-client = "^3.2.2"
 openai = "^1.23.2"
+xai-sdk = "^0.0.4"
+flask-cors = "^4.0.0"
 
 
 [build-system]
