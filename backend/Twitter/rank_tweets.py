@@ -1,7 +1,7 @@
 import json
 import asyncio
 from sklearn.metrics.pairwise import cosine_similarity
-from backend.Twitter.process_queries import generate_embeddings
+from Twitter.process_queries import generate_embeddings
 
 async def similarity_scorer(tokenized_text1, tokenized_text2):
     embeddings1 = generate_embeddings(' '.join(tokenized_text1))
