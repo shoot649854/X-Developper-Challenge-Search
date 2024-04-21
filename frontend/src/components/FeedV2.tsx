@@ -180,7 +180,7 @@ const FeedV2 = () => {
 							date={
 								new Date(post.created_at).toLocaleString() || 'Unknown date'
 							}
-							src={post.src || ''}
+							src={post.profile_image_url || ''}
 							initials={post.initials || ''}
 							description={post.description || ''}
 							followers={post.followers || '0'}
