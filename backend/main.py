@@ -26,7 +26,6 @@ DATA_DIR = os.path.join(os.getcwd(), "data")
 # with open(directory, "w") as json_file:
 #     json.dump(data, json_file, indent=4)
 
-
 def get_results(query):
     res = analyze(query)
     description = res["description"]
@@ -35,10 +34,14 @@ def get_results(query):
     for item in subqueries:
         query = "#{0} -is:retweet".format(item)
         search_result = recent_search(query, 10)
-        formatted_result = json.dumps(json.loads(search_result), indent=4)
+        search_result = search_result.replace("\n", "")
+        formatted_result = json.dumps(search_result, indent=4)
         data["queries"].append({"query": query, "results": formatted_result})
     sorted_tweets = rank_tweets(data["queries"], description)
     return (res, data)
 
 if __name__ == "__main__":
-    print(get_results("NBA Playoffs 2024"))
+    res, data = get_results("NBA Playoffs 2024")
+    directory = os.path.join(DATA_DIR, "output.json")
+    with open(directory, "w") as json_file:
+        json.dump(data, json_file, indent=4)

@@ -31,6 +31,7 @@ def recent_search(query, max_results=10, **kwargs):
     query_params = {
         'query': query,
         'tweet.fields': 'author_id,created_at,text',
+        'expansions': 'attachments.media_keys', 
         'max_results': str(max_results)
     }
     query_params.update(kwargs)
