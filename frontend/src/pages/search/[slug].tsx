@@ -6,9 +6,14 @@ import PanelItem from '@ui/PanelItem';
 import Panel from '@ui/Panel';
 import PanelItemTrends from '@ui/PanelItemTrends';
 import Footer from '@ui/Footer';
-import Tabs from '@rd/Tabs';
+import type { GetStaticPaths, GetStaticProps } from "next";
+import TabsV2 from '@rd/Tabs';
+import { useRouter } from 'next/router';
 
-export default function Home() {
+export default function HomeSearch() {
+	// const params = useParams();
+	const router = useRouter();
+	const { searchKeyword } = router.query;
 	return (
 		<>
 			<Head>
@@ -21,7 +26,7 @@ export default function Home() {
 				<Nav />
 				<main className="col-span-5 w-full border-x border-slate-200">
 					<Header title="Home" />
-					<Tabs />
+					<TabsV2 />
 				</main>
 				<aside className="col-span-3 hidden xl:flex flex-col w-[350px]">
 					<div className="sticky top-0">
