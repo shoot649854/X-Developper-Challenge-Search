@@ -24,6 +24,7 @@ async def get_results(query):
     fetch_tasks = [fetch_and_format(item) for item in subqueries]
     results = await asyncio.gather(*fetch_tasks)
     data["queries"].extend(results)
+
     sorted_tweets = await rank_tweets(data["queries"], description)
     return json.dumps([res, sorted_tweets], default=float)
 
