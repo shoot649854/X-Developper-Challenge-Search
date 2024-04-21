@@ -5,110 +5,106 @@ import { ReactNode } from 'react';
 import { Suspense } from 'react';
 
 interface PostItem {
-    name: string;
-    username: string;
-    content: string;
-    description: string;
-    date: string;
-    src: string;
-    following: string;
-    followers: string;
-    initials: string;
-    image?: ReactNode;
+	name: string;
+	username: string;
+	content: string;
+	description: string;
+	date: string;
+	src: string;
+	following: string;
+	followers: string;
+	initials: string;
+	image?: ReactNode;
 }
 
 interface FeedProp {
-    searchKeyword: string;
+	searchKeyword: string;
 }
 
 const FeedV2 = ({ searchKeyword }: FeedProp) => {
-    const [posts, setPosts] = useState<PostItem[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string>('');
+	const [posts, setPosts] = useState<PostItem[]>([]);
+	const [loading, setLoading] = useState<boolean>(true);
+	const [error, setError] = useState<string>('');
 
-    useEffect(() => {
-        const fetchData = async () => {
+	useEffect(() => {
+		const fetchData = async () => {
 			try {
 				const response = await fetch('http://127.0.0.1:4000/search', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify({ query: searchKeyword }),					
+					body: JSON.stringify({ query: 'India Elections' }),
 				});
 				if (!response.ok) {
 					throw new Error(`HTTP error! Status: ${response.status}`);
 				}
 				const data = await response.json();
 				setPosts(data.posts);
-				setLoading(false);
 			} catch (error: any) {
 				setError(error.message);
-				setLoading(false);
 				console.error('Error fetching data:', error);
+			} finally {
+				setLoading(false);
 			}
 		};
-		
-    }, [searchKeyword]);
 
-    if (loading) {
-        return <Loading />;
-    }
+		fetchData();
+	}, []);
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+	if (loading) {
+		return <Loading />;
+	}
 
-    return (
-        <Suspense fallback={<Loading />}>
-            <ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">
-                {posts.map(
-                    (
-                        {
-                            name,
-                            username,
-                            content,
-                            date,
-                            src,
-                            initials,
-                            image,
-                            following,
-                            followers,
-                            description,
-                        },
-                        i,
-                    ) => (
-                        <li key={`username-${i}`} className="p-4">
-                            <Post
-                                name={name}
-                                username={username}
-                                content={content}
-                                date={date}
-                                src={src}
-                                initials={initials}
-                                description={description}
-                                followers={followers}
-                                following={following}
-                            >
-                                {image}
-                            </Post>
-                        </li>
-                    ),
-                )}
-            </ul>
-        </Suspense>
-    );
+	if (error) {
+		return <div>Error: {error}</div>;
+	}
+	return (
+		<Suspense fallback={<Loading />}>
+			<ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">
+				{posts.map(
+					(
+						{
+							name,
+							username,
+							content,
+							date,
+							src,
+							initials,
+							image,
+							following,
+							followers,
+							description,
+						},
+						i,
+					) => (
+						<li key={`username-${i}`} className="p-4">
+							<Post
+								name={name}
+								username={username}
+								content={content}
+								date={date}
+								src={src}
+								initials={initials}
+								description={description}
+								followers={followers}
+								following={following}
+							>
+								{image}
+							</Post>
+						</li>
+					),
+				)}
+			</ul>
+		</Suspense>
+	);
 };
 
 export default FeedV2;
 
 function Loading() {
-    return <h2>Loading...</h2>;
+	return <h2>Loading...</h2>;
 }
-
-
-
-
 
 // import React, { useEffect, useState } from 'react';
 // import Image from 'next/image';
@@ -127,7 +123,7 @@ function Loading() {
 // 	followers: string;
 // 	initials: string;
 // 	image?: ReactNode;
-	
+
 // }
 
 // const items: PostItem[] = [
@@ -244,7 +240,6 @@ function Loading() {
 // 		initials: 'JD',
 // 	},
 // ];
-
 
 // interface FeedProp {
 // 	searchKeyword: string,

@@ -1,4 +1,5 @@
 from flask import Flask, request
+from flask_cors import CORS  # Import CORS
 from sklearn.metrics.pairwise import cosine_similarity
 from utils import similarity_scorer
 import statistics
@@ -22,6 +23,7 @@ def get_results(query):
     return json.dumps([res, str(sorted_tweets)])
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for the Flask app
 
 # Define routes
 @app.route('/')
@@ -34,8 +36,5 @@ def search():
     res = get_results(query)
     return res
 
-
-
 if __name__=='__main__':
     app.run(port=4000)
-
