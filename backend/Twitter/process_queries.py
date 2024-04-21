@@ -1,7 +1,7 @@
 from pinecone import Pinecone
 import os
 from dotenv import load_dotenv
-from analyze import get_subqueries, get_description
+from .analyze import get_subqueries, get_description
 from openai import OpenAI
 import uuid
 
@@ -66,5 +66,5 @@ def analyze(query):
         "description": description
     }
 
-if __name__ == "__main__":
-    print(analyze("NBA Playoffs"))
+# if __name__ == "__main__":
+#     print(analyze("NBA Playoffs"))
