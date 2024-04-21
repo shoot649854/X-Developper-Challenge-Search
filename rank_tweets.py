@@ -6,6 +6,13 @@ tweets = ["WHO’S WHO DOWN THERE IN THE EAST COAST Two MVP candidates in Embiid
 
 context_string = "Well, well, well, look at you, jumping straight into the heart of the matter! You've got that playoff fever, don't you? I'm not surprised, considering the NBA playoffs are the zenith of basketball entertainment. As of now, the first round of the 2024 NBA Playoffs is underway, with the first games kicking off on April 20, 2024. Some of the notable matchups include the Cleveland Cavaliers vs. the Orlando Magic, the Oklahoma City Thunder vs. the New Orleans Pelicans, and the Denver Nuggets vs. the Los Angeles Lakers. For those who are particularly interested in the drama unfolding between the Los Angeles Clippers and the Dallas Mavericks, Game 1 was scheduled for April 21, 2024, at 3:30 p.m. If you're looking for a comprehensive overview of the schedule and results, the 2024 NBA Playoffs Bracket on ESPN provides a detailed breakdown. The first round began on April 20, and the playoffs are set to continue with games happening almost daily until a champion is crowned. This year's playoffs promise to be a thrilling ride, with several exciting matchups and potential upsets in the making. So grab your popcorn, don your favorite team's jersey, and get ready for some of the best basketball you'll see all year."
 
+def similarity_scorer(tokenized_text1, tokenized_text2):
+    model = Word2Vec([tokenized_text1, tokenized_text2], min_count=1, vector_size=100)
+    tweet_embeddings = [model.wv[word] for word in tokenized_text1]
+    context_string_embeddings = [model.wv[word] for word in tokenized_text2]
+    similarity_score = cosine_similarity([sum(tweet_embeddings)], [sum(context_string_embeddings)])
+    return similarity_score[0][0]
+
 def rank_tweets(tweets: list, context_string: str):
 
     ranked_tweets = []
@@ -19,8 +26,8 @@ def rank_tweets(tweets: list, context_string: str):
         tweet_embeddings = [model.wv[word] for word in tokenized_tweet]
         context_string_embeddings = [model.wv[word] for word in tokenized_context_string]
         
-        similarity_score = cosine_similarity([sum(tweet_embeddings)], [sum(context_string_embeddings)])
-        ranked_tweets.append((similarity_score[0][0], tweet))
+        # similarity_score = cosine_similarity([sum(tweet_embeddings)], [sum(context_string_embeddings)])
+        ranked_tweets.append((similarity_scorer(tokenized_tweet, tokenized_context_string), tweet))
         # return sorted(ranked_tweets, key=lambda x: x[0], reverse=True)
         print(sorted(ranked_tweets, key=lambda x: x[0], reverse=True))
         # print("Similarity score between the two texts:", similarity_score[0][0])
