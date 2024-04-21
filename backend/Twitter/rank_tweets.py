@@ -15,7 +15,6 @@ def rank_tweets(queries: list, context_string: str):
     tokenized_context_string = context_string.split()
 
     for q in queries:
-        print(type(q['results']))
         try:
             tweets = eval(q['results'])['data']
             for tweet in tweets:
