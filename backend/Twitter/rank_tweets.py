@@ -22,7 +22,8 @@ async def rank_tweets(queries: list, context_string: str):
     tasks = []
     for q in queries:
         try:
-            tweets = eval(q['results'])["data"]
+            print(q['results'])
+            tweets = eval(q['results'])
             for tweet in tweets:
                 tasks.append(rank_tweet(tweet, tokenized_context_string))
         except:
