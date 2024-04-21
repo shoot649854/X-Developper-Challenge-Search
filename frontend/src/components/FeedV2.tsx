@@ -186,7 +186,16 @@ const FeedV2 = () => {
 							followers={post.followers || '0'}
 							following={post.following || '0'}
 						>
-							{post.image || ''}
+							{post.media ? (
+								<img
+									src={post.media[0].url}
+									style={{ borderRadius: '10px' }}
+									className="mb-2"
+									alt="media"
+								/>
+							) : (
+								''
+							)}
 						</Post>
 					</li>
 				))}
