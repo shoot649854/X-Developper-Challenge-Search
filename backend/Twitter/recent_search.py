@@ -34,7 +34,11 @@ def recent_search(query, max_results=10, **kwargs):
         'max_results': str(max_results)
     }
     query_params.update(kwargs)
-    json_response = connect_to_endpoint(search_url, query_params)
+    try:
+        json_response = connect_to_endpoint(search_url, query_params)
+    except:
+        print("Error: Unable to connect to Twitter API.", search_url, query_params)
+        return "{}"
     return json.dumps(json_response, indent=4, sort_keys=True)
 
 # if __name__ == "__main__":

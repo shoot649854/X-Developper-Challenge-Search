@@ -14,7 +14,7 @@ def get_results(query):
     subqueries = res["subqueries"]
     data = {"queries": []}
     for item in subqueries:
-        query = "#{0} -is:retweet".format(item)
+        query =  item
         search_result = recent_search(query, 10)
         formatted_result = json.dumps(json.loads(search_result), indent=4)
         data["queries"].append({"query": query, "results": formatted_result})
