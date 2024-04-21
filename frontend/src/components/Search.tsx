@@ -33,13 +33,13 @@ const Search = () => {
 					<input
 						type="search"
 						placeholder="Search"
-						className="w-full flex items-center pl-10 pr-4 text-sm placeholder:text-sm placeholder:font-medium py-2 bg-blue border-slate-100 placeholder:text-slate-700 rounded-full"
+						className="w-full flex items-center pl-10 pr-4 text-sm placeholder:text-sm placeholder:font-medium py-2 bg-slate-100 border-slate-100 placeholder:text-slate-700 rounded-full"
 						onChange={handleInputChange}
 					/>
 					<Button
 						variant="contained"
 						color="primary"
-						className="ml-2"
+						className="ml-2 bg-slate-900"
 						disableElevation
 						onClick={handleButtonClick}
 						onKeyPress={handleKeyPress}
