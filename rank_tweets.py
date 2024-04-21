@@ -14,23 +14,15 @@ def similarity_scorer(tokenized_text1, tokenized_text2):
     return similarity_score[0][0]
 
 def rank_tweets(tweets: list, context_string: str):
-
     ranked_tweets = []
     tokenized_context_string = context_string.split()
 
     for tweet in tweets:
         tokenized_tweet = tweet["text"].split()
-
-        model = Word2Vec([tokenized_tweet, tokenized_context_string], min_count=1, vector_size=100)
-
-        tweet_embeddings = [model.wv[word] for word in tokenized_tweet]
-        context_string_embeddings = [model.wv[word] for word in tokenized_context_string]
-        
-        # similarity_score = cosine_similarity([sum(tweet_embeddings)], [sum(context_string_embeddings)])
         ranked_tweets.append((similarity_scorer(tokenized_tweet, tokenized_context_string), tweet))
-        # return sorted(ranked_tweets, key=lambda x: x[0], reverse=True)
-        print(sorted(ranked_tweets, key=lambda x: x[0], reverse=True))
-        # print("Similarity score between the two texts:", similarity_score[0][0])
+    
+    return sorted(ranked_tweets, key=lambda x: x[0], reverse=True)
+
 
 
 tweets_text = []
