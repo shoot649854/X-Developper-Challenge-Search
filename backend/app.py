@@ -19,8 +19,7 @@ def get_results(query):
         formatted_result = json.dumps(json.loads(search_result), indent=4)
         data["queries"].append({"query": query, "results": formatted_result})
     sorted_tweets = rank_tweets(data["queries"], description)
-    print(sorted_tweets)
-    return (res, data)
+    return json.dumps([res, str(sorted_tweets)])
 
 app = Flask(__name__)
 
@@ -38,5 +37,5 @@ def search():
 
 
 if __name__=='__main__':
-    app.run(debug=True, port=4000)
+    app.run(port=4000)
 

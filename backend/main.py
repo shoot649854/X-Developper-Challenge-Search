@@ -38,7 +38,6 @@ def get_results(query):
         formatted_result = json.dumps(json.loads(search_result), indent=4)
         data["queries"].append({"query": query, "results": formatted_result})
     sorted_tweets = rank_tweets(data["queries"], description)
-    print(sorted_tweets)
     return (res, data)
 
 if __name__ == "__main__":
