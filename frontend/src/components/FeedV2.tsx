@@ -72,9 +72,81 @@ const FeedV2 = () => {
 	}
 	return (
 		<Suspense fallback={<Loading />}>
-			<div className="bg-slate-100 p-4 rounded-lg shadow mb-4">
-				<h2 className="text-lg font-semibold mb-2">Search Context</h2>
-				<p className="text-slate-700">
+			<div className="bg-slate-900 p-4 rounded-lg shadow mb-4">
+				<div className="flex flex-row space-x-1 items-center">
+					<div className="text-overflow: unset; color: rgb(231, 233, 234);">
+						<span className="text-overflow: unset; color: rgb(231, 233, 234);">
+							<span className="text-overflow text-white font-bold">Grok</span>
+						</span>
+					</div>
+					<div className="text-overflow: unset; color: rgb(231, 233, 234)">
+						<span className="text-overflow: unset;">
+							<svg
+								viewBox="0 0 22 22"
+								aria-label="Verified account"
+								role="img"
+								className="height: calc(1.0625em); width: calc(1.0625em);"
+								style={{ height: '15px', width: '15px' }}
+							>
+								<g>
+									<linearGradient
+										gradientUnits="userSpaceOnUse"
+										id="8-a"
+										x1="4.411"
+										x2="18.083"
+										y1="2.495"
+										y2="21.508"
+									>
+										<stop offset="0" stop-color="#f4e72a"></stop>
+										<stop offset=".539" stop-color="#cd8105"></stop>
+										<stop offset=".68" stop-color="#cb7b00"></stop>
+										<stop offset="1" stop-color="#f4ec26"></stop>
+										<stop offset="1" stop-color="#f4e72a"></stop>
+									</linearGradient>
+									<linearGradient
+										gradientUnits="userSpaceOnUse"
+										id="8-b"
+										x1="5.355"
+										x2="16.361"
+										y1="3.395"
+										y2="19.133"
+									>
+										<stop offset="0" stop-color="#f9e87f"></stop>
+										<stop offset=".406" stop-color="#e2b719"></stop>
+										<stop offset=".989" stop-color="#e2b719"></stop>
+									</linearGradient>
+									<g clip-rule="evenodd" fill-rule="evenodd">
+										<path
+											d="M13.324 3.848L11 1.6 8.676 3.848l-3.201-.453-.559 3.184L2.06 8.095 3.48 11l-1.42 2.904 2.856 1.516.559 3.184 3.201-.452L11 20.4l2.324-2.248 3.201.452.559-3.184 2.856-1.516L18.52 11l1.42-2.905-2.856-1.516-.559-3.184zm-7.09 7.575l3.428 3.428 5.683-6.206-1.347-1.247-4.4 4.795-2.072-2.072z"
+											fill="url(#8-a)"
+										></path>
+										<path
+											d="M13.101 4.533L11 2.5 8.899 4.533l-2.895-.41-.505 2.88-2.583 1.37L4.2 11l-1.284 2.627 2.583 1.37.505 2.88 2.895-.41L11 19.5l2.101-2.033 2.895.41.505-2.88 2.583-1.37L17.8 11l1.284-2.627-2.583-1.37-.505-2.88zm-6.868 6.89l3.429 3.428 5.683-6.206-1.347-1.247-4.4 4.795-2.072-2.072z"
+											fill="url(#8-b)"
+										></path>
+										<path
+											d="M6.233 11.423l3.429 3.428 5.65-6.17.038-.033-.005 1.398-5.683 6.206-3.429-3.429-.003-1.405.005.003z"
+											fill="#d18800"
+										></path>
+									</g>
+								</g>
+							</svg>
+						</span>
+					</div>
+					<div>
+						<Image
+							alt=""
+							draggable="false"
+							src="https://pbs.twimg.com/profile_images/1769430779845611520/lIgjSJGU_bigger.jpg"
+							className="height: calc(1.0625em); width: calc(1.0625em); border-radius: 2px;"
+							height={15}
+							width={15}
+						/>
+					</div>
+					<div className="text-slate-500 text-sm">@grok</div>
+				</div>
+
+				<p className="text-white">
 					{description
 						? description.description
 						: 'No context available for this search.'}
@@ -110,266 +182,3 @@ export default FeedV2;
 function Loading() {
 	return <h2>Loading...</h2>;
 }
-
-// import React, { useEffect, useState } from 'react';
-// import Image from 'next/image';
-// import Post from '@ui/Post';
-// import { ReactNode } from 'react';
-// import { Suspense } from 'react';
-
-// interface PostItem {
-// 	name: string;
-// 	username: string;
-// 	content: string;
-// 	description: string;
-// 	date: string;
-// 	src: string;
-// 	following: string;
-// 	followers: string;
-// 	initials: string;
-// 	image?: ReactNode;
-
-// }
-
-// const items: PostItem[] = [
-// 	{
-// 		name: 'Chinmay',
-// 		username: 'ch1nmay',
-// 		following: '249',
-// 		followers: '663',
-// 		content: 'Chinmay',
-// 		description:
-// 			'Improve your design skills by making projects. 1 every week, practice with me on Youtube. I use Figma, Tailwind CSS and Webflow.',
-// 		date: '1h',
-// 		src: 'https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80',
-// 		initials: 'JD',
-// 		image: (
-// 			<div className="w-full relative -z-10 h-80 mb-4">
-// 				<Image
-// 					fill={true}
-// 					style={{ objectFit: 'cover' }}
-// 					className="rounded-3xl"
-// 					src="https://images.unsplash.com/photo-1635776062127-d379bfcba9f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2532&q=80"
-// 					alt="Gradient"
-// 				/>
-// 			</div>
-// 		),
-// 	},
-// 	{
-// 		name: 'John Doe',
-// 		username: 'johndoe',
-// 		following: '138',
-// 		followers: '2,218',
-// 		content: 'I love Figma',
-// 		description: 'I design and hug auto layout everyday',
-// 		date: '2h',
-// 		src: 'https://images.unsplash.com/photo-1532123675048-773bd75df1b4?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80',
-// 		initials: 'JD',
-// 	},
-// 	{
-// 		name: 'Jessica Doe',
-// 		username: 'jessicadoe',
-// 		following: '866',
-// 		followers: '1001',
-// 		content: 'Tailwind CSS is insane',
-// 		description:
-// 			'Should designers code. Should you rename your Figma layers is the 1 billion…',
-// 		date: '3h',
-// 		src: 'https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80',
-// 		initials: 'JD',
-// 	},
-// 	{
-// 		name: 'Joe Doe',
-// 		username: 'joedoe',
-// 		following: '668',
-// 		followers: '1985',
-// 		content: 'Next JS documentation is so good',
-// 		description: 'Next JS enthusiast',
-// 		date: '4h',
-// 		src: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80',
-// 		initials: 'JD',
-// 	},
-// 	{
-// 		name: 'Jill Doe',
-// 		username: 'jilldoe',
-// 		following: '256',
-// 		followers: '148',
-// 		content: 'How to use custom fonts with Storybook',
-// 		description: 'Sharing my journey on Storybook, Next JS and Tailwind CSS',
-// 		date: '5h',
-// 		src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80',
-// 		initials: 'JD',
-// 	},
-// 	{
-// 		name: 'Jeff Doe',
-// 		username: 'jeffdoe',
-// 		following: '232',
-// 		followers: '89',
-// 		content: 'Why use Storybook?',
-// 		description: 'Learning and building projects with Next JS',
-// 		date: '6h',
-// 		src: 'https://images.unsplash.com/photo-1642060603505-e716140d45d2?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80',
-// 		initials: 'JD',
-// 	},
-// 	{
-// 		name: 'Jean Doe',
-// 		username: 'jeandoe',
-// 		following: '186',
-// 		followers: '90',
-// 		content: 'Vercel and Netlify are pretty cool',
-// 		description: 'Radix UI Avenger',
-// 		date: '7h',
-// 		src: 'https://images.unsplash.com/photo-1597248374161-426f0d6d2fc9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80',
-// 		initials: 'JD',
-// 	},
-// 	{
-// 		name: 'Jack Doe',
-// 		username: 'jackdoe',
-// 		following: '56',
-// 		followers: '24',
-// 		content: 'Webflow community is awesome',
-// 		description: 'Currently redesigning my portfolio for the 8th time today',
-// 		date: '8h',
-// 		src: '',
-// 		initials: 'JD',
-// 	},
-// 	{
-// 		name: 'Jenny Doe',
-// 		username: 'jennydoe',
-// 		following: '56',
-// 		followers: '23',
-// 		content: 'Radix UI is nice to integrate',
-// 		description: 'Figma and Next JS aficionado',
-// 		date: '9h',
-// 		src: 'https://images.unsplash.com/photo-1597004897768-c503466472cc?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80',
-// 		initials: 'JD',
-// 	},
-// ];
-
-// interface FeedProp {
-// 	searchKeyword: string,
-// }
-
-// interface NBASubquery {
-//     subqueries: string[];
-//     description: string;
-// }
-
-// const FeedV2 = ({searchKeyword}: FeedProp) => {
-// 	const [posts, setPosts] = useState<PostItem[]>([]);
-//     const [loading, setLoading] = useState<boolean>(true);
-//     const [error, setError] = useState<string>('');
-// 	// const [data, setData] = useState<NBASubquery | null>(null);
-//     // const [error, setError] = useState<string>('');
-
-// 	// useEffect(() => {
-//     //     fetch('http://127.0.0.1:4000/search', {
-//     //         method: 'POST',
-//     //         headers: {
-//     //             'Content-Type': 'application/json',
-//     //         },
-//     //         body: JSON.stringify({ query: 'NBA players' }),
-//     //     })
-//     //     .then(response => {
-//     //         if (!response.ok) {
-//     //             throw new Error('Network response was not ok');
-//     //         }
-//     //         return response.json();
-//     //     })
-//     //     .then(data => {
-//     //         console.log(data);
-//     //         setData(data[0]); // Assuming we're interested in the first element of the returned array
-//     //     })
-//     //     .catch(error => {
-//     //         console.error('There was a problem with your fetch operation:', error);
-//     //         setError(error.message);
-//     //     });
-//     // }, []);
-
-// 	// if (error) {
-//     //     return <div>Error: {error}</div>;
-//     // }
-
-//     // if (!data) {
-//     //     return <div>Loading...</div>;
-//     // }
-
-// 	useEffect(() => {
-//         const fetchData = async () => {
-//             try {
-//                 const response = await fetch('http://127.0.0.1:4000/search', {
-//                     method: 'POST',
-//                     headers: {
-//                         'Content-Type': 'application/json',
-//                     },
-//                     body: JSON.stringify({ query: searchKeyword }),
-//                 });
-//                 if (!response.ok) {
-//                     throw new Error('Failed to fetch data');
-//                 }
-//                 const data = await response.json();
-//                 setPosts(data.posts);
-//                 setLoading(false);
-//             } catch (error) {
-//                 setError(error.message);
-//                 setLoading(false);
-//             }
-//         };
-
-//         fetchData();
-//     }, [searchKeyword]);
-
-//     if (loading) {
-//         return <Loading />;
-//     }
-
-//     if (error) {
-//         return <div>Error: {error}</div>;
-//     }
-
-// 	return (
-// 	<Suspense fallback={<Loading />}>
-// 		<ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">
-// 			{items.map(
-// 				(
-// 					{
-// 						name,
-// 						username,
-// 						content,
-// 						date,
-// 						src,
-// 						initials,
-// 						image,
-// 						following,
-// 						followers,
-// 						description,
-// 					},
-// 					i,
-// 				) => (
-// 					<li key={`username-${i}`} className="p-4">
-// 						<Post
-// 							name={name}
-// 							username={username}
-// 							content={content}
-// 							date={date}
-// 							src={src}
-// 							initials={initials}
-// 							description={description}
-// 							followers={followers}
-// 							following={following}
-// 						>
-// 							{image}
-// 						</Post>
-// 					</li>
-// 				),
-// 			)}
-// 		</ul>
-// 	</Suspense>
-// );
-// }
-
-// export default FeedV2;
-
-// function Loading() {
-// 	return <h2>Loading...</h2>;
-// }
