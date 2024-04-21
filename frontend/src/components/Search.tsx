@@ -1,6 +1,5 @@
 import { HiMagnifyingGlass } from 'react-icons/hi2';
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
 
@@ -16,7 +15,7 @@ const Search = () => {
     const handleButtonClick = () => {
         // Navigate to the /api route, potentially with the search query as a query parameter
         // Adjust the path as needed, e.g., if you want to include the search query in the navigation
-        router.push(`/api?search=${encodeURIComponent(searchQuery)}`);
+        router.push(`/search/${searchQuery}`);
     };
 
     const handleKeyPress = (event: any) => {
@@ -37,18 +36,16 @@ const Search = () => {
 					className="w-full flex items-center pl-10 pr-4 text-sm placeholder:text-sm placeholder:font-medium py-2 bg-slate-100 border-slate-100 placeholder:text-slate-700 rounded-full"
 					onChange={handleInputChange}
 				/>
-				<Link href={`/search/${searchQuery}`} passHref>
-					<Button
-						variant="contained"
-						color="primary"
-						className="ml-2"
-						disableElevation
-						onClick={handleButtonClick}
-						onKeyPress={handleKeyPress}
-					>
-						Tweet
-					</Button>
-				</Link>
+				<Button
+					variant="contained"
+					color="primary"
+					className="ml-2"
+					disableElevation
+					onClick={handleButtonClick}
+					onKeyPress={handleKeyPress}
+				>
+					Tweet
+				</Button>
 			</div>
 		</form>
 	</div>
