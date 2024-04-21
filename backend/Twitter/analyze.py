@@ -68,7 +68,7 @@ def get_subqueries(query):
         "role": "user",
         "content":f"""Generate me 5-7 context-based keywords in a list for the search_term:'{query}'
         
-        I need names on the latest events, companies, teams, individuals, etc involved directly with this, every term in a new line
+        I need names on the latest events, companies, teams, individuals, etc involved directly with this, every term in a new line. Do not use and, or, or special characters in the keywords.
         
         Here's example:
         'search_term':Lok Sabha Elections
