@@ -40,7 +40,10 @@ class TwitterAPI:
         query_params = {
             'query': query,
             'tweet.fields': 'author_id,created_at,text',
-            'max_results': str(max_results)
+            'max_results': str(max_results),
+            'user.fields': 'name,username,profile_image_url',
+            'media.fields': 'url',
+            'expansions': 'attachments.media_keys,author_id'
         }
         json_response = self.connect_to_endpoint(self.search_url, query_params)
         return json.dumps(json_response, indent=4, sort_keys=True)

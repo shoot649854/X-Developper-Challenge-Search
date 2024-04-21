@@ -12,10 +12,10 @@ def similarity_scorer(tokenized_text1, tokenized_text2):
 def rank_tweets(queries: list, context_string: str):
     ranked_tweets = []
     tokenized_context_string = context_string.split()
-
     for q in queries:
         try:
-            tweets = eval(q['results'])['data']
+            tweets = eval(q['results'])["data"]
+            
             for tweet in tweets:
                 tokenized_tweet = tweet["text"].split()
                 ranked_tweets.append((similarity_scorer(tokenized_tweet, tokenized_context_string), tweet))

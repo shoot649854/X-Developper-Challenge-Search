@@ -1,18 +1,18 @@
-from gensim.models import Word2Vec
-from sklearn.metrics.pairwise import cosine_similarity
-import json
-import statistics
-from rank_tweets import similarity_scorer
+# from gensim.models import Word2Vec
+# from sklearn.metrics.pairwise import cosine_similarity
+# import json
+# import statistics
+# from rank_tweets import similarity_scorer
 
-def similarity_aggregate(tweets: list, context_string: str):
-    tokenized_context_string = context_string.split()
-    similarity_lst = []
+# def similarity_aggregate(tweets: list, context_string: str):
+#     tokenized_context_string = context_string.split()
+#     similarity_lst = []
 
-    for tweet in tweets:
-        tokenized_tweet = tweet["text"].split()
-        similarity_lst.append(similarity_scorer(tokenized_tweet, tokenized_context_string))
+#     for tweet in tweets:
+#         tokenized_tweet = tweet["text"].split()
+#         similarity_lst.append(similarity_scorer(tokenized_tweet, tokenized_context_string))
     
-    return statistics.mean(similarity_lst)
+#     return statistics.mean(similarity_lst)
 
 import requests
 import os
@@ -47,11 +47,15 @@ def recent_search(query, max_results=10, **kwargs):
     query_params = {
         'query': query,
         'tweet.fields': 'author_id,created_at,text',
-        'max_results': str(max_results)
+        'max_results': str(max_results),
+        'user.fields': 'name,username,profile_image_url',
+        'media.fields': 'url',
+        'expansions': 'attachments.media_keys,author_id'
     }
     query_params.update(kwargs)
+    # print(query_params)
     json_response = connect_to_endpoint(search_url, query_params)
     print(json_response)
     return json.dumps(json_response, indent=4, sort_keys=True)
 
-recent_search("playoffs")
+recent_search("lebron james")

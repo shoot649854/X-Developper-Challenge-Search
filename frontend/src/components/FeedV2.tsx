@@ -48,6 +48,7 @@ const FeedV2 = () => {
 					throw new Error(`HTTP error! Status: ${response.status}`);
 				}
 				const data = await response.json();
+				console.log(data)
 				const parsedPosts = data[1].map((item) => item.tweet);
 				setDescription(data[0]);
 				console.log(parsedPosts);

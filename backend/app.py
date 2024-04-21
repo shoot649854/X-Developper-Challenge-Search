@@ -9,16 +9,21 @@ from Twitter.process_queries import analyze
 from Twitter.rank_tweets import rank_tweets
 
 
+
 def get_results(query):
     res = analyze(query)
     description = res["description"]
     subqueries = res["subqueries"]
     data = {"queries": []}
     for item in subqueries:
-        query =  item
+        query = item
         search_result = recent_search(query, 10)
         formatted_result = json.dumps(json.loads(search_result), indent=4)
         data["queries"].append({"query": query, "results": formatted_result})
+    with open("recent_search_queries.json", 'w') as file:
+        file.write(json.dumps(data["queries"], indent=4, sort_keys=True))
+    file.close()
+    # print(data["queries"])
     sorted_tweets = rank_tweets(data["queries"], description)
     return json.dumps([res, sorted_tweets], default=float)
 app = Flask(__name__)

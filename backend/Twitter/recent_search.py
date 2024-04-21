@@ -31,7 +31,10 @@ def recent_search(query, max_results=10, **kwargs):
     query_params = {
         'query': query,
         'tweet.fields': 'author_id,created_at,text',
-        'max_results': str(max_results)
+        'max_results': str(max_results),
+        'user.fields': 'name,username,profile_image_url',
+        'media.fields': 'url',
+        'expansions': 'attachments.media_keys,author_id'
     }
     query_params.update(kwargs)
     try:
@@ -39,6 +42,9 @@ def recent_search(query, max_results=10, **kwargs):
     except:
         print("Error: Unable to connect to Twitter API.", search_url, query_params)
         return "{}"
+    with open("recent_search_queries.json", 'w') as file:
+        file.write(json.dumps(json_response, indent=4, sort_keys=True))
+    file.close()
     return json.dumps(json_response, indent=4, sort_keys=True)
 
 # if __name__ == "__main__":
