@@ -7,7 +7,7 @@ import json
 from Twitter.recent_search import recent_search
 from Twitter.process_queries import analyze
 from Twitter.rank_tweets import rank_tweets
-
+import asyncio
 
 
 async def get_results(query):
@@ -15,11 +15,16 @@ async def get_results(query):
     description = res["description"]
     subqueries = res["subqueries"]
     data = {"queries": []}
-    for item in subqueries:
-        query = item
+
+    async def fetch_and_format(query):
         search_result = recent_search(query, 10)
         formatted_result = json.dumps(json.loads(search_result), indent=4)
-        data["queries"].append({"query": query, "results": formatted_result})
+        return {"query": query, "results": formatted_result}
+
+    fetch_tasks = [fetch_and_format(item) for item in subqueries]
+    results = await asyncio.gather(*fetch_tasks)
+    data["queries"].extend(results)
+
     with open("recent_search_queries.json", 'w') as file:
         json.dump(data["queries"], file, indent=4, sort_keys=True)
     sorted_tweets = await rank_tweets(data["queries"], description)
