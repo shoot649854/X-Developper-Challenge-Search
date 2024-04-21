@@ -17,6 +17,9 @@ interface PostItem {
 	followers: string;
 	initials: string;
 	image?: ReactNode;
+	id?: number;
+	text?: string;
+	created_at?: any;
 }
 
 interface FeedProp {
@@ -49,7 +52,7 @@ const FeedV2 = () => {
 					throw new Error(`HTTP error! Status: ${response.status}`);
 				}
 				const data = await response.json();
-				const parsedPosts = data[1].map((item) => item.tweet);
+				const parsedPosts = data[1].map((item: any) => item.tweet);
 				setDescription(data[0]);
 				console.log(parsedPosts);
 				setPosts(parsedPosts);
