@@ -10,7 +10,7 @@ from Twitter.rank_tweets import rank_tweets
 
 
 
-def get_results(query):
+async def get_results(query):
     res = analyze(query)
     description = res["description"]
     subqueries = res["subqueries"]
@@ -21,11 +21,10 @@ def get_results(query):
         formatted_result = json.dumps(json.loads(search_result), indent=4)
         data["queries"].append({"query": query, "results": formatted_result})
     with open("recent_search_queries.json", 'w') as file:
-        file.write(json.dumps(data["queries"], indent=4, sort_keys=True))
-    file.close()
-    # print(data["queries"])
-    sorted_tweets = rank_tweets(data["queries"], description)
+        json.dump(data["queries"], file, indent=4, sort_keys=True)
+    sorted_tweets = await rank_tweets(data["queries"], description)
     return json.dumps([res, sorted_tweets], default=float)
+
 app = Flask(__name__)
 CORS(app)  # Enable CORS for the Flask app
 
@@ -35,9 +34,9 @@ def index():
     return 'Hello, World!'
 
 @app.route('/search', methods=['POST'])
-def search():
+async def search():
     query = request.json['query']
-    res = get_results(query)
+    res = await get_results(query)
     return res
 
 if __name__=='__main__':
