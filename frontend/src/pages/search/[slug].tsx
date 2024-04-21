@@ -7,13 +7,22 @@ import Panel from '@ui/Panel';
 import PanelItemTrends from '@ui/PanelItemTrends';
 import Footer from '@ui/Footer';
 import type { GetStaticPaths, GetStaticProps } from "next";
-import TabsV2 from '@rd/Tabs';
+import TabsV2 from '@rd/TabsV2';
 import { useRouter } from 'next/router';
+import React, { useState, useEffect } from 'react';
 
 export default function HomeSearch() {
 	// const params = useParams();
 	const router = useRouter();
-	const { searchKeyword } = router.query;
+	const { searchKeyword } = router.query
+	const [keywordString, setKeywordString] = useState<string>('');
+
+	useEffect(() => {
+	if (searchKeyword) {
+		setKeywordString(String(searchKeyword));
+	}
+	}, [searchKeyword]);
+	
 	return (
 		<>
 			<Head>
@@ -25,8 +34,10 @@ export default function HomeSearch() {
 			<div className="min-h-screen flex max-w-7xl mx-auto xl:grid xl:grid-cols-10 gap-5">
 				<Nav />
 				<main className="col-span-5 w-full border-x border-slate-200">
-					<Header title="Home" />
-					<TabsV2 />
+					<Header title="Search result" />
+					<TabsV2 
+						searchKeyword={keywordString}
+					/>
 				</main>
 				<aside className="col-span-3 hidden xl:flex flex-col w-[350px]">
 					<div className="sticky top-0">

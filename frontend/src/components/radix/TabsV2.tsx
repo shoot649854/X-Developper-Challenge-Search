@@ -2,6 +2,8 @@ import * as TabsPrimitive from '@radix-ui/react-tabs';
 import cx from 'classnames';
 import TweetForm from '@ui/TweetForm';
 import FeedV2 from '@ui/FeedV2';
+import { useRouter } from 'next/router';
+
 
 interface prop {
 	searchKeyword: string,
@@ -9,6 +11,7 @@ interface prop {
 
 const TabsV2 = ({searchKeyword}: prop) => {
 	
+	const router = useRouter();
 	return (
 	<TabsPrimitive.Root className="TabsRoot" defaultValue="tab1">
 		<TabsPrimitive.List

@@ -44,7 +44,7 @@ const Search = () => {
 					onClick={handleButtonClick}
 					onKeyPress={handleKeyPress}
 				>
-					Tweet
+					Search
 				</Button>
 			</div>
 		</form>
