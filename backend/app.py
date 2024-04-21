@@ -20,8 +20,7 @@ def get_results(query):
         formatted_result = json.dumps(json.loads(search_result), indent=4)
         data["queries"].append({"query": query, "results": formatted_result})
     sorted_tweets = rank_tweets(data["queries"], description)
-    return json.dumps([res, str(sorted_tweets)])
-
+    return json.dumps([res, sorted_tweets], default=float)
 app = Flask(__name__)
 CORS(app)  # Enable CORS for the Flask app
 

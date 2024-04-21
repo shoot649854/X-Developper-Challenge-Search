@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Post from '@ui/Post';
 import { ReactNode } from 'react';
 import { Suspense } from 'react';
+import { useRouter } from 'next/router';
 
 interface PostItem {
 	name: string;
@@ -21,26 +22,36 @@ interface FeedProp {
 	searchKeyword: string;
 }
 
-const FeedV2 = ({ searchKeyword }: FeedProp) => {
+const FeedV2 = () => {
+	const router = useRouter();
+	const searchKeyword = router.query.slug as string; // Assuming 'slug' is the dynamic part of the path containing the search query
 	const [posts, setPosts] = useState<PostItem[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string>('');
+	const [description, setDescription] = useState<PostItem | null>(null);
 
 	useEffect(() => {
 		const fetchData = async () => {
+			if (!searchKeyword) {
+				return;
+			}
 			try {
+				console.log(searchKeyword);
 				const response = await fetch('http://127.0.0.1:4000/search', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify({ query: 'India Elections' }),
+					body: JSON.stringify({ query: searchKeyword }),
 				});
 				if (!response.ok) {
 					throw new Error(`HTTP error! Status: ${response.status}`);
 				}
 				const data = await response.json();
-				setPosts(data.posts);
+				const parsedPosts = data[1].map((item) => item.tweet);
+				setDescription(data[0]);
+				console.log(parsedPosts);
+				setPosts(parsedPosts);
 			} catch (error: any) {
 				setError(error.message);
 				console.error('Error fetching data:', error);
@@ -50,7 +61,7 @@ const FeedV2 = ({ searchKeyword }: FeedProp) => {
 		};
 
 		fetchData();
-	}, []);
+	}, [searchKeyword]);
 
 	if (loading) {
 		return <Loading />;
@@ -61,40 +72,34 @@ const FeedV2 = ({ searchKeyword }: FeedProp) => {
 	}
 	return (
 		<Suspense fallback={<Loading />}>
+			<div className="bg-slate-100 p-4 rounded-lg shadow mb-4">
+				<h2 className="text-lg font-semibold mb-2">Search Context</h2>
+				<p className="text-slate-700">
+					{description
+						? description.description
+						: 'No context available for this search.'}
+				</p>
+			</div>
 			<ul className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-slate-200">
-				{posts.map(
-					(
-						{
-							name,
-							username,
-							content,
-							date,
-							src,
-							initials,
-							image,
-							following,
-							followers,
-							description,
-						},
-						i,
-					) => (
-						<li key={`username-${i}`} className="p-4">
-							<Post
-								name={name}
-								username={username}
-								content={content}
-								date={date}
-								src={src}
-								initials={initials}
-								description={description}
-								followers={followers}
-								following={following}
-							>
-								{image}
-							</Post>
-						</li>
-					),
-				)}
+				{posts.map((post, i) => (
+					<li key={`post-${post.id}-${i}`} className="p-4">
+						<Post
+							name={post.name || 'John Doe'}
+							username={post.username || 'elonmusk'}
+							content={post.text || 'No content available'}
+							date={
+								new Date(post.created_at).toLocaleString() || 'Unknown date'
+							}
+							src={post.src || ''}
+							initials={post.initials || ''}
+							description={post.description || ''}
+							followers={post.followers || '0'}
+							following={post.following || '0'}
+						>
+							{post.image || ''}
+						</Post>
+					</li>
+				))}
 			</ul>
 		</Suspense>
 	);
